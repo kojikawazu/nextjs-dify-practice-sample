@@ -1,9 +1,14 @@
 import { NextResponse, NextRequest } from 'next/server';
-const API_URL = 'https://api.dify.ai/v1/chat-messages';
 
+const API_URL = process.env.DIFY_API_URL as string;
+const API_KEY = process.env.DIFY_API_KEY as string;
+
+/**
+ * チャットボット API
+ * @param request NextRequest
+ * @returns NextResponse
+ */
 export async function POST(request: NextRequest) {
-    console.log('POST chatbot route');
-
     try {
         const body = await request.json();
 
@@ -11,7 +16,7 @@ export async function POST(request: NextRequest) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${process.env.DIFY_API_KEY}`,
+                Authorization: `Bearer ${API_KEY}`,
             },
             body: JSON.stringify({
                 inputs: body.inputs || {},
